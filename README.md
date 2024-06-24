@@ -18,6 +18,11 @@
 - Заметки про ClickHouse. Tutorial 101 — Большая подборка информации (https://ivan-shamaev.ru/clickhouse-101-course-on-learn-clickhouse-com/)
 - Ключевые особенности в архитектуре ClickHouse (https://habr.com/ru/companies/wildberries/articles/821865/)
 
+## Testing
+- Пирамида тестирования (https://testengineer.ru/testing-pyramid) 
+- Уровни тестирования (https://testengineer.ru/levels-of-software-testing/)
+- От песочных часов к пирамиде: как усовершенствовать структуру тестов (https://habr.com/ru/companies/badoo/articles/652025/)
+
 ## Unsorted
 - Low Coupling и High Cohesion (https://medium.com/german-gorelkin/low-coupling-high-cohesion-d36369fb1be9)
 - План самостоятельного обучения DDD, CQRS, EventSourcing (https://habr.com/ru/articles/653421/)
