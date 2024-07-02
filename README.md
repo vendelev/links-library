@@ -7,6 +7,7 @@
 - DDD на практике. Проектирование списка желаний (https://habr.com/ru/articles/335834/)
 
 ## CQRS (Command-Query Segregation Responsibility)
+- Основы CQRS (https://habr.com/ru/companies/simbirsoft/articles/329970/)
 - Symfony Messenger component for CQRS applications (https://dev.to/patryk/symfony-messenger-component-for-cqrs-applications-884)
 - Commands and Events in a Distributed System (https://betterprogramming.pub/commands-and-events-in-a-distributed-system-282ea5918c49)
 - CQRS на практике (https://blog.byndyu.ru/2014/07/command-and-query-responsibility.html)
@@ -22,6 +23,7 @@
 - Пирамида тестирования (https://testengineer.ru/testing-pyramid) 
 - Уровни тестирования (https://testengineer.ru/levels-of-software-testing/)
 - От песочных часов к пирамиде: как усовершенствовать структуру тестов (https://habr.com/ru/companies/badoo/articles/652025/)
+- Владимир Хориков — Принципы юнит-тестирования (https://www.youtube.com/watch?v=LkrqqpkKIXE)
 
 ## Unsorted
 - Low Coupling и High Cohesion (https://medium.com/german-gorelkin/low-coupling-high-cohesion-d36369fb1be9)
