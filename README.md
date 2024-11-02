@@ -6,6 +6,7 @@
 - Агрегаты (https://habr.com/ru/articles/660599/)
 - DDD на практике. Проектирование списка желаний (https://habr.com/ru/articles/335834/)
 - Domain Driven Design Quickly ([https://github.com/vendelev/links-library/blob/main/Domain Driven Design Quickly.pdf](https://github.com/vendelev/links-library/blob/main/Domain%20Driven%20Design%20Quickly.pdf))
+- Декомпозиция систем по ограниченным контекстам DDD — глубокое погружение (https://habr.com/ru/articles/705846/)
 
 ## CQRS (Command-Query Segregation Responsibility)
 - Основы CQRS (https://habr.com/ru/companies/simbirsoft/articles/329970/)
