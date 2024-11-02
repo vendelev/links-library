@@ -7,6 +7,8 @@
 - DDD на практике. Проектирование списка желаний (https://habr.com/ru/articles/335834/)
 - Domain Driven Design Quickly ([https://github.com/vendelev/links-library/blob/main/Domain Driven Design Quickly.pdf](https://github.com/vendelev/links-library/blob/main/Domain%20Driven%20Design%20Quickly.pdf))
 - Декомпозиция систем по ограниченным контекстам DDD — глубокое погружение (https://habr.com/ru/articles/705846/)
+- Domain-Driven Design: стратегическое проектирование. Часть 1 (https://habr.com/ru/articles/316438/)
+- Domain-Driven Design: тактическое проектирование. Часть 2 (https://habr.com/ru/articles/316890/)
 
 ## CQRS (Command-Query Segregation Responsibility)
 - Основы CQRS (https://habr.com/ru/companies/simbirsoft/articles/329970/)
