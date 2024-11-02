@@ -35,3 +35,5 @@
 - Introduction to DDD, CQRS and Event Sourcing (https://www.youtube.com/playlist?list=PL4O1nDpoa5KQGu9yPScp6I_vw_sBZ0nKE , https://academy.axoniq.io/course/ddd-cqrs-eventsourcing-concept)
 - Архитектура сложных веб-приложений (https://github.com/adelf/acwa_book_ru/tree/master)
 - Паттерны проектирования (https://design-pattern.ru/index.html)
+- Use case — это часть требований к ПО (https://practicum.yandex.ru/blog/chto-takoe-use-case-kak-ih-napisat/)
+- User Story помогает описать функции продукта (https://practicum.yandex.ru/blog/chto-takoe-user-story-i-kak-napisat/)
