@@ -5,7 +5,7 @@
 - What is domain logic? (https://enterprisecraftsmanship.com/posts/what-is-domain-logic/)
 - Агрегаты (https://habr.com/ru/articles/660599/)
 - DDD на практике. Проектирование списка желаний (https://habr.com/ru/articles/335834/)
-- Domain Driven Design Quickly (https://github.com/vendelev/links-library/blob/main/Domain Driven Design Quickly.pdf)
+- Domain Driven Design Quickly ([https://github.com/vendelev/links-library/blob/main/Domain Driven Design Quickly.pdf](https://github.com/vendelev/links-library/blob/main/Domain%20Driven%20Design%20Quickly.pdf))
 
 ## CQRS (Command-Query Segregation Responsibility)
 - Основы CQRS (https://habr.com/ru/companies/simbirsoft/articles/329970/)
