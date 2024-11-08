@@ -5,6 +5,9 @@
 - [DataBase](https://github.com/vendelev/links-library/wiki/DataBase)
 - [Testing](https://github.com/vendelev/links-library/wiki/Testing)
 
+# Мои заметки
+- ["Формальное" правило для понимания насколько мелко следует выделять ответственность в классе и соответственно разбивать класс на несколько](https://github.com/vendelev/links-library/discussions/1)
+
 ## Unsorted
 - Low Coupling и High Cohesion (https://medium.com/german-gorelkin/low-coupling-high-cohesion-d36369fb1be9)
 - План самостоятельного обучения DDD, CQRS, EventSourcing (https://habr.com/ru/articles/653421/)
