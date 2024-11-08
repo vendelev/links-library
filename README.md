@@ -1,14 +1,6 @@
 # Ссылки на интересные статьи и книги
 
-## DDD (Domain driven design)
-- Шпаргалка по основам DDD (https://zharro.github.io/ddd/2016/12/13/ddd-cheat-sheet.html)
-- What is domain logic? (https://enterprisecraftsmanship.com/posts/what-is-domain-logic/)
-- Агрегаты (https://habr.com/ru/articles/660599/)
-- DDD на практике. Проектирование списка желаний (https://habr.com/ru/articles/335834/)
-- Domain Driven Design Quickly ([https://github.com/vendelev/links-library/blob/main/Domain Driven Design Quickly.pdf](https://github.com/vendelev/links-library/blob/main/Domain%20Driven%20Design%20Quickly.pdf))
-- Декомпозиция систем по ограниченным контекстам DDD — глубокое погружение (https://habr.com/ru/articles/705846/)
-- Domain-Driven Design: стратегическое проектирование. Часть 1 (https://habr.com/ru/articles/316438/)
-- Domain-Driven Design: тактическое проектирование. Часть 2 (https://habr.com/ru/articles/316890/)
+[DDD (Domain driven design)](https://github.com/vendelev/links-library/wiki/DDD-(Domain-driven-design))
 
 ## CQRS (Command-Query Segregation Responsibility)
 - Основы CQRS (https://habr.com/ru/companies/simbirsoft/articles/329970/)
