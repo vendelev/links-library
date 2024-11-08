@@ -1,25 +1,8 @@
 # Ссылки на интересные статьи и книги
-
-[DDD (Domain driven design)](https://github.com/vendelev/links-library/wiki/DDD-(Domain-driven-design))
-
-## CQRS (Command-Query Segregation Responsibility)
-- Основы CQRS (https://habr.com/ru/companies/simbirsoft/articles/329970/)
-- Symfony Messenger component for CQRS applications (https://dev.to/patryk/symfony-messenger-component-for-cqrs-applications-884)
-- Commands and Events in a Distributed System (https://betterprogramming.pub/commands-and-events-in-a-distributed-system-282ea5918c49)
-- CQRS на практике (https://blog.byndyu.ru/2014/07/command-and-query-responsibility.html)
-
-## DataBase
-- Параллелизм базы данных в PostgreSQL (https://sql-ex.ru/blogs/?/Parallelizm_bazy_dannyh_v_PostgreSQL.html)
-- Шардирование (sharding). Эпизод 1 (https://habr.com/ru/articles/804827/)
-- Как оптимизировать работу MySQL (http://www.rldp.ru/mysql/mysql80/optimiz.htm)
-- Заметки про ClickHouse. Tutorial 101 — Большая подборка информации (https://ivan-shamaev.ru/clickhouse-101-course-on-learn-clickhouse-com/)
-- Ключевые особенности в архитектуре ClickHouse (https://habr.com/ru/companies/wildberries/articles/821865/)
-
-## Testing
-- Пирамида тестирования (https://testengineer.ru/testing-pyramid) 
-- Уровни тестирования (https://testengineer.ru/levels-of-software-testing/)
-- От песочных часов к пирамиде: как усовершенствовать структуру тестов (https://habr.com/ru/companies/badoo/articles/652025/)
-- Владимир Хориков — Принципы юнит-тестирования (https://www.youtube.com/watch?v=LkrqqpkKIXE)
+- [DDD (Domain driven design)](https://github.com/vendelev/links-library/wiki/DDD-(Domain-driven-design))
+- [CQRS (Command-Query Segregation Responsibility)](https://github.com/vendelev/links-library/wiki/CQRS-(Command%E2%80%90Query-Segregation-Responsibility))
+- [DataBase](https://github.com/vendelev/links-library/wiki/DataBase)
+- [Testing](https://github.com/vendelev/links-library/wiki/Testing)
 
 ## Unsorted
 - Low Coupling и High Cohesion (https://medium.com/german-gorelkin/low-coupling-high-cohesion-d36369fb1be9)
