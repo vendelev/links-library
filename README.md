@@ -1,6 +1,7 @@
 # Ссылки на интересные статьи и книги
 - [DDD (Domain driven design)](https://github.com/vendelev/links-library/wiki/DDD-(Domain-driven-design))
 - [CQRS (Command-Query Segregation Responsibility)](https://github.com/vendelev/links-library/wiki/CQRS-(Command%E2%80%90Query-Segregation-Responsibility))
+- [Documentation as code](https://github.com/vendelev/links-library/wiki/Documentation-as-code)
 - [DataBase](https://github.com/vendelev/links-library/wiki/DataBase)
 - [Testing](https://github.com/vendelev/links-library/wiki/Testing)
 
