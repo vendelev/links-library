@@ -7,6 +7,11 @@
 
 # Мои заметки
 - ["Формальное" правило для понимания насколько мелко следует выделять ответственность в классе и соответственно разбивать класс на несколько](https://github.com/vendelev/links-library/discussions/1)
+- [Когда стоит использовать События (Events)](https://github.com/vendelev/links-library/discussions/3)
+- [Какие тесты стоит писать?](https://github.com/vendelev/links-library/discussions/6)
+- [Модули и компоненты](https://github.com/vendelev/links-library/discussions/4)
+- [Interactor и UseCase, Query и Command](https://github.com/vendelev/links-library/discussions/2)
+- [Гибрид методологий Feature-Sliced Design & Module Design для Vue проектов](https://github.com/vendelev/links-library/discussions/5)
 
 ## Unsorted
 - Low Coupling и High Cohesion (https://medium.com/german-gorelkin/low-coupling-high-cohesion-d36369fb1be9)
