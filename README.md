@@ -16,3 +16,4 @@
 - Паттерны проектирования (https://design-pattern.ru/index.html)
 - Use case — это часть требований к ПО (https://practicum.yandex.ru/blog/chto-takoe-use-case-kak-ih-napisat/)
 - User Story помогает описать функции продукта (https://practicum.yandex.ru/blog/chto-takoe-user-story-i-kak-napisat/)
+- DesignPatternsPHP (https://github.com/DesignPatternsPHP/DesignPatternsPHP)
