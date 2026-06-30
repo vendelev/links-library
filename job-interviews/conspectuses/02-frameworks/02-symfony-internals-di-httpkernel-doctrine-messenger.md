@@ -1,10 +1,20 @@
 # Symfony: internals, DI, HttpKernel, Doctrine, Messenger
 
-Цель: быстро повторить Symfony перед интервью уровня Middle+/Senior/Lead PHP developer. Фокус на HttpKernel, EventDispatcher, compiled DI container, bundles, Doctrine, transactions, Messenger и тестировании.
+Цель: быстро повторить Symfony перед интервью уровня Middle+/Senior/Lead PHP developer.
+
+Фокус: HttpKernel, EventDispatcher, compiled DI container, bundles, Doctrine, transactions,
+Messenger и тестирование.
 
 ## Быстрый Senior-Ответ
 
-Symfony явно построен вокруг HttpKernel, EventDispatcher и скомпилированного DI container. Controller выбирается через routing и controller resolver, аргументы собираются value resolvers, расширяемость часто делается через events/listeners/subscribers, compiler passes и bundles. В backend-интервью важно уверенно объяснять container compilation, private services, Doctrine Unit of Work/Identity Map, lazy proxies, transaction boundaries, Messenger retries/failure transport и integration testing.
+Symfony явно построен вокруг HttpKernel, EventDispatcher и скомпилированного DI container.
+
+Controller выбирается через routing и controller resolver, аргументы собираются value resolvers,
+расширяемость часто делается через events/listeners/subscribers, compiler passes и bundles.
+
+В backend-интервью важно уверенно объяснять container compilation, private services,
+Doctrine Unit of Work/Identity Map, lazy proxies, transaction boundaries, Messenger retries,
+failure transport и integration testing.
 
 ## Request Lifecycle
 
@@ -25,9 +35,11 @@ Symfony явно построен вокруг HttpKernel, EventDispatcher и с
 - Symfony container компилируется, оптимизируется и удаляет неиспользуемые private services.
 - Controller invocation идет через resolver-ы, а не через простой `new Controller()`.
 - Большая часть расширяемости находится в events/listeners/subscribers/compiler passes.
-- Многие компоненты Symfony независимы и используются в других фреймворках: Console, HttpFoundation, Routing, EventDispatcher, VarDumper.
+- Многие компоненты Symfony независимы и используются в других фреймворках: Console, HttpFoundation,
+  Routing, EventDispatcher, VarDumper.
 
-Короткий ответ: Kernel передает Request в HttpKernel, события и routing выбирают controller, value resolvers собирают аргументы, response проходит через response/terminate events.
+Короткий ответ: Kernel передает Request в HttpKernel, события и routing выбирают controller.
+Value resolvers собирают аргументы, response проходит через response/terminate events.
 
 ## DI Container
 
@@ -59,7 +71,8 @@ services:
     alias: App\Billing\StripePaymentGateway
 ```
 
-Senior-пояснение: Symfony DI стремится к compile-time проверке графа зависимостей. Это снижает runtime-сюрпризы и делает приложение более предсказуемым.
+Senior-пояснение: Symfony DI стремится к compile-time проверке графа зависимостей.
+Это снижает runtime-сюрпризы и делает приложение более предсказуемым.
 
 ## Bundles
 
@@ -103,7 +116,8 @@ Senior-пояснение: Symfony чаще мыслится event-driven kernel
 - Перегружать controller security expressions бизнес-правилами.
 - Возвращать Doctrine entities напрямую в публичный API без контроля сериализации.
 
-Короткий ответ: Routing listener определяет controller, затем argument/value resolvers собирают аргументы из request attributes, services, entity mapping, request body и других источников.
+Короткий ответ: Routing listener определяет controller, затем argument/value resolvers собирают аргументы
+из request attributes, services, entity mapping, request body и других источников.
 
 ## Validation
 
@@ -169,7 +183,8 @@ $entityManager->flush();
 $entityManager->clear();
 ```
 
-Senior-пояснение: Doctrine дает сильную модель Unit of Work и identity map, но требует дисциплины с transaction boundaries, batch processing и loading strategies.
+Senior-пояснение: Doctrine дает сильную модель Unit of Work и identity map, но требует дисциплины
+с transaction boundaries, batch processing и loading strategies.
 
 ## Unit of Work и Identity Map
 
@@ -290,7 +305,8 @@ Checklist для handler/message:
 
 ## Testing Specifics
 
-Подробная стратегия тестирования вынесена в `03-php-testing-frameworks-phpunit-codeception-pest.md`. Для Symfony важно помнить фреймворковые инструменты.
+Подробная стратегия тестирования вынесена в `03-php-testing-frameworks-phpunit-codeception-pest.md`.
+Для Symfony важно помнить фреймворковые инструменты.
 
 Что использовать:
 
@@ -322,13 +338,16 @@ Checklist для handler/message:
 ## Вопросы и Короткие Ответы
 
 **Как Symfony выбирает controller и аргументы?**  
-Routing listener определяет controller, затем argument/value resolvers собирают аргументы из request attributes, services, entity mapping, request body и других источников.
+Routing listener определяет controller, затем argument/value resolvers собирают аргументы из request attributes,
+services, entity mapping, request body и других источников.
 
 **Чем autowiring отличается от autoconfiguration?**  
-Autowiring подставляет зависимости по типам. Autoconfiguration автоматически добавляет tags/configuration по interfaces/attributes/base classes.
+Autowiring подставляет зависимости по типам.
+Autoconfiguration автоматически добавляет tags/configuration по interfaces/attributes/base classes.
 
 **Почему private services by default?**  
-Чтобы container мог оптимизировать граф, удалить неиспользуемые services и заставить код использовать explicit DI вместо service locator.
+Чтобы container мог оптимизировать граф, удалить неиспользуемые services и заставить код использовать
+explicit DI вместо service locator.
 
 **Что такое Unit of Work?**  
 Компонент ORM, который отслеживает managed entities, вычисляет changesets и синхронизирует изменения с БД при `flush()`.
@@ -337,16 +356,20 @@ Autowiring подставляет зависимости по типам. Autoco
 Кэш соответствия `class + id -> object instance` внутри EntityManager, чтобы одна строка БД была представлена одним объектом.
 
 **Где должна жить бизнес-логика?**  
-Не в middleware/controller/entity lifecycle hooks по умолчанию. Обычно в application services/use cases/domain services/entities/value objects, в зависимости от архитектуры.
+Не в middleware/controller/entity lifecycle hooks по умолчанию.
+Обычно в application services/use cases/domain services/entities/value objects, в зависимости от архитектуры.
 
 **Как проектировать retries?**  
-Считать, что операция может повториться. Нужны idempotency key, unique constraints, state checks, backoff, failure transport и наблюдаемость.
+Считать, что операция может повториться. Нужны idempotency key, unique constraints, state checks,
+backoff, failure transport и наблюдаемость.
 
 **Что опасно в ORM events/listeners?**  
-Скрытые side effects, порядок вызова, выполнение внутри transaction, рекурсивный `flush`, сложность тестирования и профилирования.
+Скрытые side effects, порядок вызова, выполнение внутри transaction, рекурсивный `flush`,
+сложность тестирования и профилирования.
 
 **Как объяснить lazy loading senior-аудитории?**  
-Это удобный IO-on-property-access. Он снижает boilerplate, но прячет запросы и может разрушить latency при сериализации, шаблонах и циклах.
+Это удобный IO-on-property-access. Он снижает boilerplate, но прячет запросы и может разрушить latency
+при сериализации, шаблонах и циклах.
 
 ## Мини-Практика
 
@@ -358,7 +381,9 @@ Autowiring подставляет зависимости по типам. Autoco
 
 ### 2. Найти N+1
 
-Сценарий: serializer или template обращается к lazy relation внутри цикла. Решения: fetch join, explicit join, DTO projection, read model, query count assertion в тесте.
+Сценарий: serializer или template обращается к lazy relation внутри цикла.
+
+Решения: fetch join, explicit join, DTO projection, read model, query count assertion в тесте.
 
 ### 3. Спроектировать idempotent handler
 
@@ -397,29 +422,29 @@ Autowiring подставляет зависимости по типам. Autoco
 
 Официальная документация:
 
-- Symfony Documentation: https://symfony.com/doc/current/index.html
-- Symfony HttpKernel Component: https://symfony.com/doc/current/components/http_kernel.html
-- Symfony Event Dispatcher: https://symfony.com/doc/current/event_dispatcher.html
-- Symfony Service Container: https://symfony.com/doc/current/service_container.html
-- Symfony Bundles: https://symfony.com/doc/current/bundles.html
-- Symfony Routing: https://symfony.com/doc/current/routing.html
-- Symfony Validation: https://symfony.com/doc/current/validation.html
-- Symfony Configuration: https://symfony.com/doc/current/configuration.html
-- Symfony Secrets: https://symfony.com/doc/current/configuration/secrets.html
-- Symfony Messenger: https://symfony.com/doc/current/messenger.html
-- Symfony Messenger Testing: https://symfony.com/doc/current/messenger.html#testing
-- Symfony Testing: https://symfony.com/doc/current/testing.html
-- Doctrine ORM Documentation: https://www.doctrine-project.org/projects/orm.html
-- Doctrine ORM Unit of Work internals: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork.html
-- Doctrine ORM Working with Objects: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/working-with-objects.html
-- Doctrine Migrations: https://www.doctrine-project.org/projects/migrations.html
+- Symfony Documentation: <https://symfony.com/doc/current/index.html>
+- Symfony HttpKernel Component: <https://symfony.com/doc/current/components/http_kernel.html>
+- Symfony Event Dispatcher: <https://symfony.com/doc/current/event_dispatcher.html>
+- Symfony Service Container: <https://symfony.com/doc/current/service_container.html>
+- Symfony Bundles: <https://symfony.com/doc/current/bundles.html>
+- Symfony Routing: <https://symfony.com/doc/current/routing.html>
+- Symfony Validation: <https://symfony.com/doc/current/validation.html>
+- Symfony Configuration: <https://symfony.com/doc/current/configuration.html>
+- Symfony Secrets: <https://symfony.com/doc/current/configuration/secrets.html>
+- Symfony Messenger: <https://symfony.com/doc/current/messenger.html>
+- Symfony Messenger Testing: <https://symfony.com/doc/current/messenger.html#testing>
+- Symfony Testing: <https://symfony.com/doc/current/testing.html>
+- Doctrine ORM Documentation: <https://www.doctrine-project.org/projects/orm.html>
+- Doctrine ORM Unit of Work internals: <https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork.html>
+- Doctrine ORM Working with Objects: <https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/working-with-objects.html>
+- Doctrine Migrations: <https://www.doctrine-project.org/projects/migrations.html>
 
 Статьи и паттерны:
 
-- Martin Fowler, Data Mapper: https://martinfowler.com/eaaCatalog/dataMapper.html
-- Martin Fowler, Unit of Work: https://martinfowler.com/eaaCatalog/unitOfWork.html
-- Martin Fowler, Identity Map: https://martinfowler.com/eaaCatalog/identityMap.html
-- Microsoft Azure Architecture Center, Retry pattern: https://learn.microsoft.com/en-us/azure/architecture/patterns/retry
-- Microsoft Azure Architecture Center, Competing Consumers pattern: https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers
-- Microservices.io, Transactional Outbox: https://microservices.io/patterns/data/transactional-outbox.html
-- Stripe API idempotent requests: https://docs.stripe.com/api/idempotent_requests
+- Martin Fowler, Data Mapper: <https://martinfowler.com/eaaCatalog/dataMapper.html>
+- Martin Fowler, Unit of Work: <https://martinfowler.com/eaaCatalog/unitOfWork.html>
+- Martin Fowler, Identity Map: <https://martinfowler.com/eaaCatalog/identityMap.html>
+- Microsoft Azure Architecture Center, Retry pattern: <https://learn.microsoft.com/en-us/azure/architecture/patterns/retry>
+- Microsoft Azure Architecture Center, Competing Consumers pattern: <https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers>
+- Microservices.io, Transactional Outbox: <https://microservices.io/patterns/data/transactional-outbox.html>
+- Stripe API idempotent requests: <https://docs.stripe.com/api/idempotent_requests>

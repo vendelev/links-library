@@ -1,10 +1,19 @@
 # Laravel: internals, DI, middleware, Eloquent, queues
 
-Цель: быстро повторить Laravel перед интервью уровня Middle+/Senior/Lead PHP developer. Фокус на том, как Laravel исполняет HTTP-запрос, строит зависимости, работает с Eloquent, транзакциями, очередями и тестами.
+Цель: быстро повторить Laravel перед интервью уровня Middle+/Senior/Lead PHP developer.
+
+Фокус: как Laravel исполняет HTTP-запрос, строит зависимости, работает с Eloquent, транзакциями,
+очередями и тестами.
 
 ## Быстрый Senior-Ответ
 
-Laravel строится вокруг service container, service providers и HTTP kernel/middleware pipeline. Большая часть магии - это container bindings, facades как static proxy к container service, route model binding, Eloquent Active Record, queue workers и удобные testing fakes. На senior-уровне важно говорить не только про API фреймворка, но и про границы транзакций, N+1, долгоживущие процессы, идемпотентность jobs и тестируемость.
+Laravel строится вокруг service container, service providers и HTTP kernel/middleware pipeline.
+
+Большая часть магии - это container bindings, facades как static proxy к container service,
+route model binding, Eloquent Active Record, queue workers и удобные testing fakes.
+
+На senior-уровне важно говорить не только про API фреймворка, но и про границы транзакций, N+1,
+долгоживущие процессы, идемпотентность jobs и тестируемость.
 
 ## Request Lifecycle
 
@@ -26,7 +35,9 @@ Laravel строится вокруг service container, service providers и HT
 - Facade не является static-сервисом в прямом смысле: это статический proxy к объекту из container.
 - В Octane, RoadRunner и Swoole нельзя мыслить request-scoped как в PHP-FPM: singleton-состояние живет между запросами.
 
-Короткий ответ: front controller грузит autoload, создает app, HTTP Kernel bootstrap-ит config/providers, request идет через middleware pipeline, router находит route, container resolve-ит controller, response проходит обратно.
+Короткий ответ: front controller грузит autoload, создает app, HTTP Kernel bootstrap-ит config/providers.
+Request идет через middleware pipeline, router находит route, container resolve-ит controller,
+response проходит обратно.
 
 ## Service Container и DI
 
@@ -56,7 +67,8 @@ $this->app->when(AdminReportService::class)
     ->give(fn ($app) => $app->make('cache')->store('redis'));
 ```
 
-Senior-пояснение: binding интерфейса отделяет use case от инфраструктуры, а contextual binding позволяет не плодить фабрики ради одного отличающегося backend-а.
+Senior-пояснение: binding интерфейса отделяет use case от инфраструктуры.
+Contextual binding позволяет не плодить фабрики ради одного отличающегося backend-а.
 
 ## Service Providers
 
@@ -185,7 +197,9 @@ $books = Book::query()
     ->get();
 ```
 
-Senior-пояснение: Eloquent удобен для CRUD и application-level data access, но его Active Record природа может смешивать доменную модель и persistence. На больших доменах стоит явно отделять use cases, DTO/read models и transaction boundaries.
+Senior-пояснение: Eloquent удобен для CRUD и application-level data access, но его Active Record природа
+может смешивать доменную модель и persistence. На больших доменах стоит явно отделять use cases,
+DTO/read models и transaction boundaries.
 
 ## Lazy/Eager Loading и N+1
 
@@ -234,7 +248,8 @@ DB::transaction(function () use ($command) {
 - Dispatch job до commit.
 - Делать retries без понимания, какие операции уже выполнены.
 
-Короткий ответ: `afterCommit()` нужен, когда worker должен увидеть уже committed state, а не промежуточные данные текущей транзакции.
+Короткий ответ: `afterCommit()` нужен, когда worker должен увидеть уже committed state,
+а не промежуточные данные текущей транзакции.
 
 ## Migrations
 
@@ -296,7 +311,8 @@ Checklist для job:
 
 ## Testing Specifics
 
-Подробная стратегия тестирования вынесена в `03-php-testing-frameworks-phpunit-codeception-pest.md`. Для Laravel важно помнить фреймворковые инструменты.
+Подробная стратегия тестирования вынесена в `03-php-testing-frameworks-phpunit-codeception-pest.md`.
+Для Laravel важно помнить фреймворковые инструменты.
 
 Что использовать:
 
@@ -328,28 +344,35 @@ Checklist для job:
 ## Вопросы и Короткие Ответы
 
 **Что происходит от `index.php` до controller?**  
-Front controller грузит autoload, создает app, HTTP Kernel bootstrap-ит config/providers, request идет через middleware pipeline, router находит route, container resolve-ит controller, response проходит обратно.
+Front controller грузит autoload, создает app, HTTP Kernel bootstrap-ит config/providers.
+Request идет через middleware pipeline, router находит route, container resolve-ит controller,
+response проходит обратно.
 
 **Facade - это плохо?**  
-Не само по себе. Facade - удобный static proxy к container service. Риск в скрытых зависимостях и усложнении тестирования. В domain/application коде лучше явный DI.
+Не само по себе. Facade - удобный static proxy к container service.
+Риск в скрытых зависимостях и усложнении тестирования. В domain/application коде лучше явный DI.
 
 **Почему нельзя `env()` в runtime?**  
 После `config:cache` `.env` не должен читаться как источник runtime-значений. Runtime-код должен читать `config()`.
 
 **Как избежать N+1 в Eloquent?**  
-Использовать `with`, `load`, `loadMissing`, `withCount`, профилировать SQL, запретить lazy loading в dev/test, проектировать response shape явно.
+Использовать `with`, `load`, `loadMissing`, `withCount`, профилировать SQL.
+Запретить lazy loading в dev/test, проектировать response shape явно.
 
 **Где должна жить бизнес-логика?**  
-Не в middleware/controller/entity lifecycle hooks по умолчанию. Обычно в application services/use cases/domain services/entities/value objects, в зависимости от архитектуры.
+Не в middleware/controller/entity lifecycle hooks по умолчанию.
+Обычно в application services/use cases/domain services/entities/value objects, в зависимости от архитектуры.
 
 **Как проектировать retries?**  
 Считать, что операция может повториться. Нужны idempotency key, unique constraints, state checks, backoff, DLQ и наблюдаемость.
 
 **Что опасно в ORM events/listeners?**  
-Скрытые side effects, порядок вызова, выполнение внутри transaction, рекурсивные `flush`/`save`, сложность тестирования и профилирования.
+Скрытые side effects, порядок вызова, выполнение внутри transaction, рекурсивные `flush`/`save`,
+сложность тестирования и профилирования.
 
 **Как объяснить lazy loading senior-аудитории?**  
-Это удобный IO-on-property-access. Он снижает boilerplate, но прячет запросы и может разрушить latency при сериализации, шаблонах и циклах.
+Это удобный IO-on-property-access. Он снижает boilerplate, но прячет запросы и может разрушить latency
+при сериализации, шаблонах и циклах.
 
 ## Мини-Практика
 
@@ -417,30 +440,30 @@ $orders = Order::query()
 
 Официальная документация:
 
-- Laravel Documentation: https://laravel.com/docs
-- Laravel Lifecycle: https://laravel.com/docs/lifecycle
-- Laravel Service Container: https://laravel.com/docs/container
-- Laravel Service Providers: https://laravel.com/docs/providers
-- Laravel Middleware: https://laravel.com/docs/middleware
-- Laravel Routing: https://laravel.com/docs/routing
-- Laravel Validation: https://laravel.com/docs/validation
-- Laravel Configuration: https://laravel.com/docs/configuration
-- Laravel Eloquent ORM: https://laravel.com/docs/eloquent
-- Laravel Eloquent Relationships: https://laravel.com/docs/eloquent-relationships
-- Laravel Database Transactions: https://laravel.com/docs/database#database-transactions
-- Laravel Migrations: https://laravel.com/docs/migrations
-- Laravel Queues: https://laravel.com/docs/queues
-- Laravel Horizon: https://laravel.com/docs/horizon
-- Laravel Testing: https://laravel.com/docs/testing
-- Laravel HTTP Tests: https://laravel.com/docs/http-tests
-- Laravel Mocking/Fakes: https://laravel.com/docs/mocking
+- Laravel Documentation: <https://laravel.com/docs>
+- Laravel Lifecycle: <https://laravel.com/docs/lifecycle>
+- Laravel Service Container: <https://laravel.com/docs/container>
+- Laravel Service Providers: <https://laravel.com/docs/providers>
+- Laravel Middleware: <https://laravel.com/docs/middleware>
+- Laravel Routing: <https://laravel.com/docs/routing>
+- Laravel Validation: <https://laravel.com/docs/validation>
+- Laravel Configuration: <https://laravel.com/docs/configuration>
+- Laravel Eloquent ORM: <https://laravel.com/docs/eloquent>
+- Laravel Eloquent Relationships: <https://laravel.com/docs/eloquent-relationships>
+- Laravel Database Transactions: <https://laravel.com/docs/database#database-transactions>
+- Laravel Migrations: <https://laravel.com/docs/migrations>
+- Laravel Queues: <https://laravel.com/docs/queues>
+- Laravel Horizon: <https://laravel.com/docs/horizon>
+- Laravel Testing: <https://laravel.com/docs/testing>
+- Laravel HTTP Tests: <https://laravel.com/docs/http-tests>
+- Laravel Mocking/Fakes: <https://laravel.com/docs/mocking>
 
 Статьи и паттерны:
 
-- Martin Fowler, Active Record: https://martinfowler.com/eaaCatalog/activeRecord.html
-- Martin Fowler, Unit of Work: https://martinfowler.com/eaaCatalog/unitOfWork.html
-- Martin Fowler, Identity Map: https://martinfowler.com/eaaCatalog/identityMap.html
-- Microsoft Azure Architecture Center, Retry pattern: https://learn.microsoft.com/en-us/azure/architecture/patterns/retry
-- Microsoft Azure Architecture Center, Competing Consumers pattern: https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers
-- Microservices.io, Transactional Outbox: https://microservices.io/patterns/data/transactional-outbox.html
-- Stripe API idempotent requests: https://docs.stripe.com/api/idempotent_requests
+- Martin Fowler, Active Record: <https://martinfowler.com/eaaCatalog/activeRecord.html>
+- Martin Fowler, Unit of Work: <https://martinfowler.com/eaaCatalog/unitOfWork.html>
+- Martin Fowler, Identity Map: <https://martinfowler.com/eaaCatalog/identityMap.html>
+- Microsoft Azure Architecture Center, Retry pattern: <https://learn.microsoft.com/en-us/azure/architecture/patterns/retry>
+- Microsoft Azure Architecture Center, Competing Consumers pattern: <https://learn.microsoft.com/en-us/azure/architecture/patterns/competing-consumers>
+- Microservices.io, Transactional Outbox: <https://microservices.io/patterns/data/transactional-outbox.html>
+- Stripe API idempotent requests: <https://docs.stripe.com/api/idempotent_requests>

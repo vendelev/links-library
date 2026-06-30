@@ -1,12 +1,19 @@
 # PHP Testing: PHPUnit, Codeception, Pest
 
-Гайд для Lead/Senior PHP backend developer перед интервью. Фокус: как объяснять тестирование практически, какие trade-off'ы видеть, где чаще всего ломается стратегия тестов, и когда выбирать PHPUnit, Codeception или Pest.
+Гайд для Lead/Senior PHP backend developer перед интервью.
+
+Фокус: как объяснять тестирование практически, какие trade-off'ы видеть,
+где чаще всего ломается стратегия тестов, и когда выбирать PHPUnit, Codeception или Pest.
 
 ## Быстрый Senior-Ответ
 
-Тестирование в backend-проекте нужно не для процента покрытия, а для управляемого изменения системы. Хорошая стратегия сочетает быстрые unit-тесты для бизнес-логики, интеграционные тесты для БД/очередей/внешних адаптеров, функциональные HTTP/API тесты и ограниченное число e2e сценариев для критических пользовательских потоков.
+Тестирование в backend-проекте нужно не для процента покрытия, а для управляемого изменения системы.
+Хорошая стратегия сочетает быстрые unit-тесты для бизнес-логики, интеграционные тесты для БД,
+очередей и внешних адаптеров, функциональные HTTP/API тесты и ограниченное число e2e сценариев.
 
-Senior ожидаемо говорит не только про инструменты, но и про стоимость поддержки: изоляция, стабильные фикстуры, deterministic time/randomness, транзакции, CI, flaky-тесты, mutation testing, контрактные тесты и тестируемость архитектуры.
+Senior ожидаемо говорит не только про инструменты, но и про стоимость поддержки: изоляция,
+стабильные фикстуры, deterministic time/randomness, транзакции, CI, flaky-тесты,
+mutation testing, контрактные тесты и тестируемость архитектуры.
 
 ## Пирамида Тестов
 
@@ -24,7 +31,8 @@ Senior ожидаемо говорит не только про инструме
 - Большинство бизнес-правил стоит проверять unit/integration тестами, а не UI/e2e.
 - E2E должны покрывать только критические сценарии: регистрация, checkout, оплата, создание заказа, ключевой API flow.
 
-Senior-комментарий: пирамида не догма. Для API/backend часто получается ромб или trophy: много интеграционных/API тестов, если ценность системы в связке БД, ORM, HTTP и очередей.
+Senior-комментарий: пирамида не догма. Для API/backend часто получается ромб или trophy:
+много интеграционных/API тестов, если ценность системы в связке БД, ORM, HTTP и очередей.
 
 ## Уровни Тестирования
 
@@ -57,7 +65,8 @@ Senior short answer: unit-тест должен падать из-за изме�
 
 ### Integration-Тесты
 
-Проверяют взаимодействие нескольких компонентов: ORM + БД, repository + migrations, queue + handler, HTTP client + fake server.
+Проверяют взаимодействие нескольких компонентов: ORM + БД, repository + migrations,
+queue + handler, HTTP client + fake server.
 
 Примеры:
 
@@ -132,7 +141,8 @@ $mailer->expects($this->once())
     ->with($this->isInstanceOf(WelcomeEmail::class));
 ```
 
-Риск: mock проверяет implementation details. Если тест знает слишком много о вызовах внутри сервиса, рефакторинг станет дорогим.
+Риск: mock проверяет implementation details. Если тест знает слишком много о вызовах внутри сервиса,
+рефакторинг станет дорогим.
 
 ### Fake
 
@@ -155,7 +165,8 @@ $mailer->expects($this->once())
 
 Пример: event dispatcher spy хранит dispatched events.
 
-Senior short answer: stub задает ответы, mock задает ожидания, fake реализует упрощенное поведение, spy наблюдает и проверяется после выполнения.
+Senior short answer: stub задает ответы, mock задает ожидания, fake реализует упрощенное поведение,
+spy наблюдает и проверяется после выполнения.
 
 ## Fixtures, Factories, Builders
 
@@ -209,7 +220,8 @@ SQLite быстрее, но может скрыть ошибки:
 - transaction isolation;
 - SQL dialect differences.
 
-Senior short answer: для серьезной backend-системы интеграционные тесты должны запускаться на той же СУБД, что production, например PostgreSQL/MySQL через Docker/Testcontainers/CI service.
+Senior short answer: для серьезной backend-системы интеграционные тесты должны запускаться на той же СУБД,
+что production, например PostgreSQL/MySQL через Docker/Testcontainers/CI service.
 
 ### Transactions
 
@@ -318,7 +330,8 @@ Characterization tests фиксируют текущее поведение lega
 4. Рефакторить малыми шагами.
 5. После изменения требований обновить тесты осознанно.
 
-Senior short answer: для legacy сначала пишу characterization tests вокруг поведения, затем выделяю зависимости и только потом рефакторю internals.
+Senior short answer: для legacy сначала пишу characterization tests вокруг поведения,
+затем выделяю зависимости и только потом рефакторю internals.
 
 ## Flaky Tests
 
@@ -569,7 +582,8 @@ Trade-off:
 | Learning curve | низкая | средняя | низкая-средняя |
 | Инфраструктура | минимальная | больше конфигурации | минимальная |
 
-Короткий ответ на интервью: PHPUnit - база и стандарт, Pest - более выразительный DSL поверх PHPUnit, Codeception - удобен для acceptance/API/e2e и actor-style сценариев.
+Короткий ответ на интервью: PHPUnit - база и стандарт, Pest - более выразительный DSL поверх PHPUnit,
+Codeception - удобен для acceptance/API/e2e и actor-style сценариев.
 
 ## Laravel Testing Specifics
 
@@ -592,7 +606,8 @@ Trade-off:
 - проверять policies/authorization отдельно или через API сценарии;
 - для jobs тестировать dispatch и handler отдельно.
 
-Pitfall: `Event::fake()` может отключить observers/listeners, которые нужны для поведения. Использовать scoped fake или assert после реального выполнения, если listener является частью сценария.
+Pitfall: `Event::fake()` может отключить observers/listeners, которые нужны для поведения.
+Использовать scoped fake или assert после реального выполнения, если listener является частью сценария.
 
 ## Symfony Testing Specifics
 
@@ -633,19 +648,24 @@ Pitfall: слишком много `KernelTestCase` делает suite медл�
 ## Senior-Level Short Answers
 
 **Когда mock, а когда integration test?**  
-Mock использую на границе с внешним side effect или для дорогой зависимости. Если риск в SQL/ORM/transaction behavior, нужен integration test с реальной БД.
+Mock использую на границе с внешним side effect или для дорогой зависимости.
+Если риск в SQL/ORM/transaction behavior, нужен integration test с реальной БД.
 
 **Почему 100% coverage недостаточно?**  
-Coverage показывает выполнение строк, но не качество assert'ов. Код может быть покрыт и при этом не проверять важный результат. Для критичной логики полезен mutation testing.
+Coverage показывает выполнение строк, но не качество assert'ов.
+Код может быть покрыт и при этом не проверять важный результат. Для критичной логики полезен mutation testing.
 
 **Как тестировать очередь?**  
-Отдельно проверяю, что job dispatch'ится при нужном событии, и отдельно тестирую handler/job. Для критичных flows добавляю integration test с реальным или test transport.
+Отдельно проверяю, что job dispatch'ится при нужном событии, и отдельно тестирую handler/job.
+Для критичных flows добавляю integration test с реальным или test transport.
 
 **Как работать с flaky tests?**  
-Сначала фиксирую причину и изоляцию: время, random, порядок, shared state, внешние сервисы. Quarantine допустим только временно, иначе команда перестает доверять CI.
+Сначала фиксирую причину и изоляцию: время, random, порядок, shared state, внешние сервисы.
+Quarantine допустим только временно, иначе команда перестает доверять CI.
 
 **Что важнее, unit или integration?**  
-Зависит от риска. Для чистой доменной логики unit дешевле. Для backend с ORM, транзакциями и очередями integration/API tests часто дают больше уверенности.
+Зависит от риска. Для чистой доменной логики unit дешевле.
+Для backend с ORM, транзакциями и очередями integration/API tests часто дают больше уверенности.
 
 **Как тестировать legacy?**  
 Пишу characterization tests вокруг текущего публичного поведения, затем рефакторю маленькими шагами и отделяю зависимости.
@@ -736,31 +756,35 @@ Coverage показывает выполнение строк, но не кач�
 
 Хороший ответ Senior/Lead должен звучать так:
 
-> Я начинаю не с выбора PHPUnit/Pest/Codeception, а с карты рисков. Где бизнес-логика, где интеграционные границы, где высокая цена регрессии. Unit-тестами закрываю чистую логику, integration/API тестами - БД, транзакции, очереди и фреймворк, e2e оставляю для критичных flows. Следую принципу: тест должен быть быстрым, надежным, читаемым и падать по полезной причине.
+> Я начинаю не с выбора PHPUnit/Pest/Codeception, а с карты рисков.
+> Где бизнес-логика, где интеграционные границы, где высокая цена регрессии.
+> Unit-тестами закрываю чистую логику, integration/API тестами - БД, транзакции, очереди и фреймворк,
+> e2e оставляю для критичных flows. Следую принципу: тест должен быть быстрым, надежным,
+> читаемым и падать по полезной причине.
 
 ## Ссылки
 
 Официальная документация:
 
-- PHPUnit: https://phpunit.de/
-- PHPUnit Documentation: https://docs.phpunit.de/
-- Codeception: https://codeception.com/
-- Codeception Documentation: https://codeception.com/docs/
-- Pest: https://pestphp.com/
-- Pest Documentation: https://pestphp.com/docs
-- Laravel Testing: https://laravel.com/docs/testing
-- Laravel HTTP Tests: https://laravel.com/docs/http-tests
-- Laravel Mocking/Fakes: https://laravel.com/docs/mocking
-- Symfony Testing: https://symfony.com/doc/current/testing.html
-- Symfony Messenger Testing: https://symfony.com/doc/current/messenger.html#testing
+- PHPUnit: <https://phpunit.de/>
+- PHPUnit Documentation: <https://docs.phpunit.de/>
+- Codeception: <https://codeception.com/>
+- Codeception Documentation: <https://codeception.com/docs/>
+- Pest: <https://pestphp.com/>
+- Pest Documentation: <https://pestphp.com/docs>
+- Laravel Testing: <https://laravel.com/docs/testing>
+- Laravel HTTP Tests: <https://laravel.com/docs/http-tests>
+- Laravel Mocking/Fakes: <https://laravel.com/docs/mocking>
+- Symfony Testing: <https://symfony.com/doc/current/testing.html>
+- Symfony Messenger Testing: <https://symfony.com/doc/current/messenger.html#testing>
 
 Статьи и материалы:
 
-- Martin Fowler, Test Pyramid: https://martinfowler.com/bliki/TestPyramid.html
-- Martin Fowler, Mocks Aren't Stubs: https://martinfowler.com/articles/mocksArentStubs.html
-- Google Testing Blog: https://testing.googleblog.com/
-- Infection Mutation Testing: https://infection.github.io/
-- Infection Documentation: https://infection.github.io/guide/
-- Microsoft Azure Architecture Center, Retry pattern: https://learn.microsoft.com/en-us/azure/architecture/patterns/retry
-- Microservices.io, Transactional Outbox: https://microservices.io/patterns/data/transactional-outbox.html
-- Stripe API idempotent requests: https://docs.stripe.com/api/idempotent_requests
+- Martin Fowler, Test Pyramid: <https://martinfowler.com/bliki/TestPyramid.html>
+- Martin Fowler, Mocks Aren't Stubs: <https://martinfowler.com/articles/mocksArentStubs.html>
+- Google Testing Blog: <https://testing.googleblog.com/>
+- Infection Mutation Testing: <https://infection.github.io/>
+- Infection Documentation: <https://infection.github.io/guide/>
+- Microsoft Azure Architecture Center, Retry pattern: <https://learn.microsoft.com/en-us/azure/architecture/patterns/retry>
+- Microservices.io, Transactional Outbox: <https://microservices.io/patterns/data/transactional-outbox.html>
+- Stripe API idempotent requests: <https://docs.stripe.com/api/idempotent_requests>
