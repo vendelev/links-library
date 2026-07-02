@@ -12,6 +12,7 @@
 2. Пройти `02-type-system-oop.md`: типизация, OOP, exceptions, attributes, enums, readonly, property hooks.
 3. Пройти `03-runtime-fpm-opcache-composer.md`: request lifecycle, FPM, OPcache, JIT, память, GC, Composer.
 4. Пройти `04-interview-practice.md`: проговорить короткие ответы и решить мини-практику.
+5. Пройти `05-frankenphp.md`: понять FrankenPHP, worker mode, long-running PHP и production-риски.
 
 Если времени мало, приоритет такой:
 
@@ -23,6 +24,7 @@
 6. OPcache, preloading, JIT.
 7. Copy-on-write, references, GC, memory leaks.
 8. Composer install/update, dependency resolution, autoload, platform config, private packages, scripts/plugins security.
+9. FrankenPHP classic/worker mode, state persistence, Laravel Octane/Symfony Runtime, production observability.
 
 ## Главные темы для Lead PHP
 
@@ -80,6 +82,14 @@
 - Мини-практика по миграции, `match`, enum, weak contracts, composition, exception translation, FPM workers, Composer conflicts.
 - Финальный чеклист.
 
+`05-frankenphp.md`:
+
+- FrankenPHP как PHP application server на базе Caddy.
+- Classic mode, worker mode и отличие от PHP-FPM.
+- Long-running PHP: state persistence, static/global/singleton pitfalls, cleanup.
+- Конфигурация Caddyfile, Docker, production-чеклист.
+- Laravel Octane, Symfony Runtime, observability, performance trade-off-ы.
+
 ## Основные источники
 
 - [PHP Manual: Migration guides](https://www.php.net/manual/en/appendices.php)
@@ -90,6 +100,7 @@
 - [Composer documentation](https://getcomposer.org/doc/)
 - [PHPStan documentation](https://phpstan.org/user-guide/getting-started)
 - [Psalm documentation](https://psalm.dev/docs/)
+- [FrankenPHP documentation](https://frankenphp.dev/docs/)
 
 ## Что перенесено из исходных файлов
 
